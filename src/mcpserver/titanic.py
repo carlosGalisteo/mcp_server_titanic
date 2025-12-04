@@ -59,7 +59,7 @@ def pasajeros_mayores_de(edad_min: float) -> FilterResult:
     return FilterResult(count=len(pasajeros), passengers=pasajeros)
 
 @mcp.tool()
-def superviviente(name:str) -> FilterResult:
+def superviviente() -> FilterResult:
     """Devuelve la lista de pasajeros que sobrevivieron al Titanic."""
     df = load_titanic_df()
     
@@ -74,7 +74,7 @@ def superviviente(name:str) -> FilterResult:
     return FilterResult(count=len(supervivientes), passengers=supervivientes)    
 
 @mcp.tool()
-def no_superviviente(name:str) -> FilterResult:
+def no_superviviente() -> FilterResult:
     """Devuelve la lista de pasajeros que no sobrevivieron al Titanic."""
     df = load_titanic_df()
     
