@@ -1,0 +1,22 @@
+[project]
+name = "mcp-server-titanic"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "mcp[cli]>=1.23.1",
+    "pandas>=2.3.3",
+]
+
+[project.scripts]
+mcp-server-titanic = "mcpserver.__main__:main"
+
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+[tool.setuptools.packages.find]
+where = ["src"]
