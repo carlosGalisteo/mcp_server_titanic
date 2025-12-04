@@ -7,7 +7,7 @@ import pandas as pd
 #Ruta del archivo xls del Titanic
 DATA_PATH = Path(r"C:\CURSOS\MCP\Datos\titanic.xls")
 
-mcp = FastMCP(name = "Titanic Survival", description = "Predict survival on the Titanic")
+mcp = FastMCP(name = "Titanic Survival")
 
 def load_titanic_df() -> pd.DataFrame:
     """Carga el DataFrame del Titanic desde un archivo xls.
