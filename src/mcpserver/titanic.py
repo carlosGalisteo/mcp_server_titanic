@@ -57,3 +57,16 @@ def pasajeros_mayores_de(edad_min: float) -> AgeFilterResult:
     ]
     
     return AgeFilterResult(count=len(pasajeros), passengers=pasajeros)
+
+@mcp.tool()
+def superviviente(name:str) -> bool:
+    """Indica si un pasajero sobrevivió al Titanic dado su nombre."""
+    df = load_titanic_df()
+    pasajero = df[df["name"].str.lower() == name.strip().lower()]
+    
+    if pasajero.empty:
+        raise ValueError(f"No se encontró ningún pasajero con el nombre '{name}'.")
+    
+    return bool(pasajero.iloc[0]["survived"])
+    
+    
