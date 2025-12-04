@@ -29,7 +29,7 @@ class FilterResult(BaseModel):
     passengers: List[Passenger]
     
 @mcp.tool()
-def pasajeros_menores_de(edad_max: float) -> AgeFilterResult:
+def pasajeros_menores_de(edad_max: float) -> FilterResult:
     """Devuelve los pasajeros menores de una edad dada.
     y sus nombres"""
     df = load_titanic_df()
