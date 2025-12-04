@@ -43,4 +43,17 @@ def pasajeros_menores_de(edad_max: float) -> AgeFilterResult:
     
     return AgeFilterResult(count=len(pasajeros), passengers=pasajeros)
 
-
+@mcp.tool()
+def pasajeros_mayores_de(edad_min: float) -> AgeFilterResult:
+    """Devuelve los pasajeros mayores de una edad dada.
+    y sus nombres"""
+    df = load_titanic_df()
+    mask = (df["age"] >= edad_min) & (df["age"].notna())
+    resultados = df[mask]
+    
+    pasajeros = [
+        Passenger(name=row["name"], age=row["age"])
+        for _, row in resultados.iterrows()
+    ]
+    
+    return AgeFilterResult(count=len(pasajeros), passengers=pasajeros)
