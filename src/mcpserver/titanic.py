@@ -24,7 +24,7 @@ class Passenger(BaseModel):
     name: str
     age: float
     
-class AgeFilterResult(BaseModel):
+class FilterResult(BaseModel):
     count: int
     passengers: List[Passenger]
     
@@ -41,10 +41,10 @@ def pasajeros_menores_de(edad_max: float) -> AgeFilterResult:
         for _, row in resultados.iterrows()
     ]
     
-    return AgeFilterResult(count=len(pasajeros), passengers=pasajeros)
+    return FilterResult(count=len(pasajeros), passengers=pasajeros)
 
 @mcp.tool()
-def pasajeros_mayores_de(edad_min: float) -> AgeFilterResult:
+def pasajeros_mayores_de(edad_min: float) -> FilterResult:
     """Devuelve los pasajeros mayores de una edad dada.
     y sus nombres"""
     df = load_titanic_df()
@@ -56,17 +56,34 @@ def pasajeros_mayores_de(edad_min: float) -> AgeFilterResult:
         for _, row in resultados.iterrows()
     ]
     
-    return AgeFilterResult(count=len(pasajeros), passengers=pasajeros)
+    return FilterResult(count=len(pasajeros), passengers=pasajeros)
 
 @mcp.tool()
-def superviviente(name:str) -> bool:
-    """Indica si un pasajero sobrevivió al Titanic dado su nombre."""
+def superviviente(name:str) -> FilterResult:
+    """Devuelve la lista de pasajeros que sobrevivieron al Titanic."""
     df = load_titanic_df()
-    pasajero = df[df["name"].str.lower() == name.strip().lower()]
     
-    if pasajero.empty:
-        raise ValueError(f"No se encontró ningún pasajero con el nombre '{name}'.")
+    mask1 = (df["survived"] == 1) & (df["name"].notna())
+    superviv = df[mask1]
+        
+    supervivientes = [
+        Passenger(name=row["name"], age=row["age"])
+        for _, row in superviv.iterrows()
+    ]       
     
-    return bool(pasajero.iloc[0]["survived"])
+    return FilterResult(count=len(supervivientes), passengers=supervivientes)    
+
+@mcp.tool()
+def no_superviviente(name:str) -> FilterResult:
+    """Devuelve la lista de pasajeros que no sobrevivieron al Titanic."""
+    df = load_titanic_df()
     
+    mask2 = (df["survived"] == 0) & (df["name"].notna())
+    no_superviv = df[mask2]
+        
+    no_supervivientes = [
+        Passenger(name=row["name"], age=row["age"])
+        for _, row in no_superviv.iterrows()
+    ]       
     
+    return FilterResult(count=len(no_supervivientes), passengers=no_supervivientes)   
