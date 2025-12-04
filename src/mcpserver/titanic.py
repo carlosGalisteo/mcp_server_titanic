@@ -5,7 +5,7 @@ from pathlib import Path
 import pandas as pd
 
 #Ruta del archivo xls del Titanic
-DATA_PATH = Path(r"C:\CURSOS\MCP\Datos\titanic.xls")
+DATA_PATH = Path(r"C:\CURSOS\MCP\Datos\titanic.xlsx")
 
 mcp = FastMCP(name = "Titanic Survival")
 
